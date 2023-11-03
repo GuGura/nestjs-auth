@@ -9,3 +9,49 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Users {
+  id               String             @id @default(cuid())
+  email            String             @unique
+  name             String?
+  createAt         DateTime           @default(now())
+  Accounts         Accounts[]
+  UserAccessTokens UserAccessTokens[]
+}
+
+model Accounts {
+  id                String    @id @default(cuid())
+  userId            String
+  type              AuthType  @default(LOCAL)
+  provider          Provider  @default(EMAIL)
+  providerAccountId String?   @default("")
+  expiredAt         DateTime?
+  password          String?   @default("")
+  createAt          DateTime  @default(now())
+
+  user Users @relation(fields: [userId], references: [id])
+}
+
+model UserAccessTokens {
+  index    Int      @id @default(autoincrement())
+  userId   String
+  platform String
+  access   String
+  refresh  String
+  updateAt DateTime @default(now())
+
+  user Users @relation(fields: [userId], references: [id])
+
+  @@unique([userId, platform])
+}
+
+enum AuthType {
+  LOCAL
+  OAUTH
+}
+
+enum Provider {
+  GOOGLE
+  APPLE
+  EMAIL
+}

@@ -65,4 +65,12 @@ yarn add class-validator class-transformer
 yarn add prisma --dev
 yarn prisma
 yarn prisma init
+
+yarn prisma migrate dev --name init
+yarn add @prisma/client
+```
+
+## Bcrypt
+```bash
+yarn add bcrypt @types/bcrypt
 ```
