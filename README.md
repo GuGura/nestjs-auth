@@ -54,3 +54,9 @@ yarn add helmet
 ```bash
 yarn add cookie-parser @types/cookie-parser
 ```
+
+## ValidationPipe
+To begin using it, we first install the required dependency.
+```bash
+yarn add class-validator class-transformer
+```
