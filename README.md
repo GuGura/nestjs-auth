@@ -60,3 +60,9 @@ To begin using it, we first install the required dependency.
 ```bash
 yarn add class-validator class-transformer
 ```
+## Prisma
+```bash
+yarn add prisma --dev
+yarn prisma
+yarn prisma init
+```
