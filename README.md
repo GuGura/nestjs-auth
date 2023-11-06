@@ -74,3 +74,9 @@ yarn add @prisma/client
 ```bash
 yarn add bcrypt @types/bcrypt
 ```
+
+## Passport
+```bash
+yarn add @nestjs/passport passport passport-local
+yarn add @types/passport-local
+```
