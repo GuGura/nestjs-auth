@@ -1,14 +1,25 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import {
+  Bind,
+  Body,
+  Controller,
+  Get,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
 
-  @Get()
-  async findAll() {
-    return 'all';
+  @UseGuards(JwtAuthGuard)
+  @Get('info')
+  @Bind(Request())
+  async getInfo(req) {
+    return req.user;
   }
+
   @Get('add-user-test')
   async create(
     @Body() data: { email: string; password: string; name: string },
@@ -19,9 +30,5 @@ export class UsersController {
       name: 'test',
     });
     return data;
-  }
-  @Get('info')
-  async getInfo() {
-    return 'info';
   }
 }
