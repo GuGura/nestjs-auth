@@ -1,15 +1,17 @@
-import { Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './strategy/local.strategy';
 import { Response } from 'express';
 import { Public } from './strategy/public.decorator';
+import { GoogleAuthGuard } from './strategy/google.strategy';
+import { AuthGuard } from '@nestjs/passport';
 
+@Public()
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
-  @Public()
   @Post('login')
   async login(@Req() req, @Res() res: Response) {
     const result = await this.authService.login(
@@ -18,6 +20,13 @@ export class AuthController {
     );
     this.authService.setTokenToHttpOnlyCookie(res, result);
     res.send(result.user);
+  }
+
+  @Get('google')
+  @UseGuards(AuthGuard('google'))
+  async googleAuth(): Promise<void> {
+    console.log('call google auth page');
+    // redirect google login page
   }
 
   @Post('logout')

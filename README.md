@@ -89,3 +89,8 @@ yarn add @nestjs/jwt passport-jwt @types/passport-jwt
 ```bash
 yarn add @nestjs/config
 ```
+
+## OAuth2(Google)
+```bash
+yarn add passport-google-oauth20 @types/passport-google-oauth20
+```

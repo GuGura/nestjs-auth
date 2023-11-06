@@ -2,6 +2,8 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
 import { UsersRepository } from './users.repository';
 import { AuthRepository } from '../auth/auth.repository';
+import { Profile } from 'passport';
+import { Provider } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -22,4 +24,11 @@ export class UsersService {
     await this.usersRepository.createLocalAccount(data);
     return true;
   }
+
+  async validateOAuthUser(
+    provider: Provider,
+    accessToken: string,
+    refreshToken: string,
+    profile: Profile,
+  ) {}
 }
