@@ -66,6 +66,21 @@ export class AuthService {
     });
   }
 
+  logoutHttpOnlyCookie(res) {
+    res.cookie('access', '', {
+      httpOnly: true,
+      expires: new Date(Date.now() - 1000),
+      secure: process.env.NODE_ENV === 'production', //HTTPS 사용여부
+      sameSite: 'strict',
+    });
+    res.cookie('refresh', '', {
+      httpOnly: true,
+      expires: new Date(Date.now() - 1000),
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    });
+  }
+
   async cryptoPassword(password: string): Promise<string> {
     return hash(password, 10);
   }
