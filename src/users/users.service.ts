@@ -1,13 +1,15 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
 import { AuthService } from '../auth/auth.service';
 import { UsersRepository } from './users.repository';
+import { AuthRepository } from '../auth/auth.repository';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject(forwardRef(() => AuthService))
     private authService: AuthService,
+    @Inject(forwardRef(() => AuthRepository))
+    private authRepository: AuthRepository,
     private usersRepository: UsersRepository,
   ) {}
 
@@ -17,7 +19,7 @@ export class UsersService {
     name: string;
   }) {
     data.password = await this.authService.cryptoPassword(data?.password);
-    await this.usersRepository.create(data);
+    await this.usersRepository.createLocalAccount(data);
     return true;
   }
 }

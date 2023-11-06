@@ -77,6 +77,15 @@ yarn add bcrypt @types/bcrypt
 
 ## Passport
 ```bash
-yarn add @nestjs/passport passport passport-local
-yarn add @types/passport-local
+yarn add @nestjs/passport passport passport-local @types/passport-local
+```
+
+## JWT
+```bash
+yarn add @nestjs/jwt passport-jwt @types/passport-jwt
+```
+
+## Config
+```bash
+yarn add @nestjs/config
 ```

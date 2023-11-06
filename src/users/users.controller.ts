@@ -20,4 +20,8 @@ export class UsersController {
     });
     return data;
   }
+  @Get('info')
+  async getInfo() {
+    return 'info';
+  }
 }
