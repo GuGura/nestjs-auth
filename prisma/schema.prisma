@@ -10,15 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id               String             @id @default(cuid())
-  email            String             @unique
-  name             String?
-  createAt         DateTime           @default(now())
-  Accounts         Accounts[]
-  UserAccessTokens UserAccessTokens[]
-}
-
 model Accounts {
   id                String    @id @default(cuid())
   userId            String
@@ -30,6 +21,15 @@ model Accounts {
   createAt          DateTime  @default(now())
 
   user Users @relation(fields: [userId], references: [id])
+}
+
+model Users {
+  id               String             @id @default(cuid())
+  email            String             @unique
+  name             String?
+  createAt         DateTime           @default(now())
+  Accounts         Accounts[]
+  UserAccessTokens UserAccessTokens[]
 }
 
 model UserAccessTokens {

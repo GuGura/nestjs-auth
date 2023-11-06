@@ -15,7 +15,7 @@ export class UsersController {
   ) {
     await this.userService.createLocalAccount({
       email: 'a@gmail.com',
-      password: '1234',
+      password: '12345678',
       name: 'test',
     });
     return data;

@@ -6,8 +6,8 @@ import { AuthService } from '../auth/auth.service';
 export class UsersService {
   constructor(
     @Inject(forwardRef(() => AuthService))
-    private prisma: PrismaService,
     private authService: AuthService,
+    private prisma: PrismaService,
   ) {}
 
   async createLocalAccount(data: {
@@ -15,13 +15,15 @@ export class UsersService {
     password: string;
     name: string;
   }) {
+    console.log('data::', data.email, data.password, data.name);
+
     const account = await this.prisma.accounts.create({
       data: {
         password: await this.authService.cryptoPassword(data?.password),
         user: {
           create: {
-            email: data.email,
-            name: data.name,
+            email: data?.email,
+            name: data?.name,
           },
         },
       },
