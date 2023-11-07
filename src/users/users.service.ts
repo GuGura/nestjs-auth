@@ -25,10 +25,32 @@ export class UsersService {
     return true;
   }
 
-  async validateOAuthUser(
+  async findOrCreateOAuthAccount(
     provider: Provider,
-    accessToken: string,
-    refreshToken: string,
-    profile: Profile,
-  ) {}
+    id: any,
+    name: string,
+    email: string,
+  ) {
+    const account = await this.usersRepository.findAccountByProvider(
+      provider,
+      id,
+    );
+
+    if (account) {
+      return account.user;
+    } else {
+      const newAccount = await this.usersRepository.createOAuthAccount(
+        provider,
+        id,
+        name,
+        email,
+      );
+
+      return {
+        id: newAccount.id,
+        email,
+        name,
+      };
+    }
+  }
 }

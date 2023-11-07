@@ -4,7 +4,6 @@ import { LocalAuthGuard } from './strategy/local.strategy';
 import { Response } from 'express';
 import { Public } from './strategy/public.decorator';
 import { GoogleAuthGuard } from './strategy/google.strategy';
-import { AuthGuard } from '@nestjs/passport';
 
 @Public()
 @Controller('auth')
@@ -23,10 +22,21 @@ export class AuthController {
   }
 
   @Get('google')
-  @UseGuards(AuthGuard('google'))
+  @UseGuards(GoogleAuthGuard)
   async googleAuth(): Promise<void> {
     console.log('call google auth page');
     // redirect google login page
+  }
+
+  @Get('google/callback')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuthCallback(@Req() req, @Res() res: Response): Promise<void> {
+    // const result = await this.authService.login(
+    //   req.user,
+    //   req.headers['user-agent'],
+    // );
+    // this.authService.setTokenToHttpOnlyCookie(res, result);
+    res.redirect(process.env.WEB_URL);
   }
 
   @Post('logout')

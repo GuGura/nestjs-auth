@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   async validateLocalUser(email: string, pass: string): Promise<any> {
-    const account = await this.authRepository.findLocalAccountByEmail(email);
+    const account = await this.usersRepository.findLocalAccountByEmail(email);
 
     const compare = await this.comparePassword(pass, account.password);
     if (compare === true) {
