@@ -108,3 +108,7 @@ yarn add @nestjs/throttler
 ```bash
 yarn add winston winston-daily-rotate-file
 ```
+
+# 다이어그램
+### AppModule
+![img_1.png](img_1.png)

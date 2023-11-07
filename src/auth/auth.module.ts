@@ -5,7 +5,6 @@ import { AuthRepository } from './auth.repository';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategy/local.strategy';
 import { jwtConstants } from './constants';
-import { PrismaService } from '../prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { GoogleStrategy } from './strategy/google.strategy';
@@ -25,7 +24,6 @@ import { JwtStrategy } from './strategy/jwt.strategy';
     AuthService,
     AuthRepository,
     LocalStrategy,
-    PrismaService,
     GoogleStrategy,
     JwtStrategy,
   ],

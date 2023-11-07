@@ -3,16 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { PrismaService } from './prisma.service';
 import { ConfigModule } from '@nestjs/config';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
+    PrismaModule,
     ConfigModule.forRoot({
       envFilePath: '.env.local',
       isGlobal: true,
@@ -30,7 +31,6 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
   controllers: [AppController],
   providers: [
     AppService,
-    PrismaService,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
