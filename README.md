@@ -94,3 +94,9 @@ yarn add @nestjs/config
 ```bash
 yarn add passport-google-oauth20 @types/passport-google-oauth20
 ```
+
+## Throttler
+무차별 대입 공격으로부터 애플리케이션을 보호하는 일반적인 기술은 속도 제한 입니다
+```bash
+yarn add @nestjs/throttler
+```

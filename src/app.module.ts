@@ -7,6 +7,7 @@ import { PrismaService } from './prisma.service';
 import { ConfigModule } from '@nestjs/config';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -16,6 +17,15 @@ import { APP_GUARD } from '@nestjs/core';
       envFilePath: '.env.local',
       isGlobal: true,
     }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60,
+        limit: 60,
+        skipIf: () => {
+          return !!process.env.NODE_ENV === false;
+        },
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [
@@ -24,6 +34,10 @@ import { APP_GUARD } from '@nestjs/core';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard, //Rate Limiter 가드
     },
   ],
 })
