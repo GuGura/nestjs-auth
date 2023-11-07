@@ -94,6 +94,7 @@ yarn add @nestjs/config
 ```bash
 yarn add passport-google-oauth20 @types/passport-google-oauth20
 yarn add passport-naver
+yarn add passport-kakao
 ```
 
 ## Throttler

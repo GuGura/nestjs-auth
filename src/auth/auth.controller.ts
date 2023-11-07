@@ -5,6 +5,7 @@ import { Response } from 'express';
 import { Public } from './strategy/public.decorator';
 import { GoogleAuthGuard } from './strategy/google.strategy';
 import { NaverAuthGuard } from './strategy/naver.strategy';
+import { KaKaoAuthGuard } from './strategy/kakao.strategy';
 
 @Public()
 @Controller('auth')
@@ -34,6 +35,24 @@ export class AuthController {
   async naverAuth(): Promise<void> {
     console.log('call naver auth page');
     // redirect google login page
+  }
+
+  @Get('kakao')
+  @UseGuards(KaKaoAuthGuard)
+  async kakaoAuth(): Promise<void> {
+    console.log('call kakao auth page');
+    // redirect google login page
+  }
+
+  @Get('kakao/callback')
+  @UseGuards(KaKaoAuthGuard)
+  async kakaoAuthCallback(@Req() req, @Res() res: Response): Promise<void> {
+    const result = await this.authService.login(
+      req.user,
+      req.headers['user-agent'],
+    );
+    this.authService.setTokenToHttpOnlyCookie(res, result);
+    res.redirect(process.env.WEB_URL);
   }
 
   @Get('naver/callback')
