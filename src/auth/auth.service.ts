@@ -1,4 +1,9 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  forwardRef,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { UsersRepository } from '../users/users.repository';
@@ -32,6 +37,26 @@ export class AuthService {
       user,
       access: token.access,
       refresh: token.refresh,
+    };
+  }
+
+  async refresh(access: string, refresh: string, agent: string) {
+    if (!access || !refresh) {
+      throw new BadRequestException();
+    }
+    const account = await this.usersRepository.findAccountByTokens(
+      access,
+      refresh,
+    );
+    if (!account) {
+      throw new BadRequestException();
+    }
+    const token = await this.generateToken(account.user, agent);
+
+    return {
+      access: token.access,
+      refresh: token.refresh,
+      user: account.user,
     };
   }
 

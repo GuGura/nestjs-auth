@@ -31,11 +31,11 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(GoogleAuthGuard)
   async googleAuthCallback(@Req() req, @Res() res: Response): Promise<void> {
-    // const result = await this.authService.login(
-    //   req.user,
-    //   req.headers['user-agent'],
-    // );
-    // this.authService.setTokenToHttpOnlyCookie(res, result);
+    const result = await this.authService.login(
+      req.user,
+      req.headers['user-agent'],
+    );
+    this.authService.setTokenToHttpOnlyCookie(res, result);
     res.redirect(process.env.WEB_URL);
   }
 
@@ -45,5 +45,16 @@ export class AuthController {
     res.send({
       message: 'logout',
     });
+  }
+
+  @Post('refresh')
+  async refresh(@Req() req, @Res() res: Response) {
+    const result = await this.authService.refresh(
+      req.cookies['access'],
+      req.cookies['refresh'],
+      req.headers['user-agent'],
+    );
+    this.authService.setTokenToHttpOnlyCookie(res, result);
+    res.send(result.user);
   }
 }

@@ -9,6 +9,7 @@ import { PrismaService } from '../prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { GoogleStrategy } from './strategy/google.strategy';
+import { JwtStrategy } from './strategy/jwt.strategy';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { GoogleStrategy } from './strategy/google.strategy';
     LocalStrategy,
     PrismaService,
     GoogleStrategy,
+    JwtStrategy,
   ],
   exports: [AuthService, AuthRepository],
 })

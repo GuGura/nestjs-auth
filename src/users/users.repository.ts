@@ -96,4 +96,25 @@ export class UsersRepository {
     }
     return null;
   }
+  async findAccountByTokens(access: string, refresh: string) {
+    const account = await this.prisma.userAccessTokens.findFirst({
+      select: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+          },
+        },
+      },
+      where: {
+        refresh: refresh,
+        access: access,
+      },
+    });
+    if (!!account === true) {
+      return account;
+    }
+    return null;
+  }
 }
