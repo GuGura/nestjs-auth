@@ -100,3 +100,11 @@ yarn add passport-google-oauth20 @types/passport-google-oauth20
 ```bash
 yarn add @nestjs/throttler
 ```
+
+## Winston
+다중 전송을 지원하는 간단하고 보편적인 로깅 라이브러리
+### winston-daily-rotate-file
+회전 파일에 기록하는 Winston 용 전송입니다 . 날짜, 크기 제한을 기준으로 로그를 순환할 수 있으며, 개수 또는 경과 일수를 기준으로 오래된 로그를 제거할 수 있습니다
+```bash
+yarn add winston winston-daily-rotate-file
+```
