@@ -11,15 +11,14 @@ datasource db {
 }
 
 model Accounts {
-  id                  String    @id @default(cuid())
-  userId              String
-  type                AuthType  @default(LOCAL)
-  provider            Provider  @default(EMAIL)
-  providerAccountId   String?   @default("")
-  providerAccessToken String?   @default("")
-  expiredAt           DateTime?
-  password            String?   @default("")
-  createAt            DateTime  @default(now())
+  id                String    @id @default(cuid())
+  userId            String
+  type              AuthType  @default(LOCAL)
+  provider          Provider  @default(EMAIL)
+  providerAccountId String?   @default("")
+  expiredAt         DateTime?
+  password          String?   @default("")
+  createAt          DateTime  @default(now())
 
   user Users @relation(fields: [userId], references: [id])
 }
