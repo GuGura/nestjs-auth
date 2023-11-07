@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Public } from '../auth/strategy/public.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -21,11 +22,12 @@ export class UsersController {
   }
 
   @Get('add-user-test')
+  @Public()
   async create(
     @Body() data: { email: string; password: string; name: string },
   ) {
     await this.userService.createLocalAccount({
-      email: 'a@gmail.com',
+      email: 'a@naver.com',
       password: '12345678',
       name: 'test',
     });

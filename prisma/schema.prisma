@@ -54,4 +54,6 @@ enum Provider {
   GOOGLE
   APPLE
   EMAIL
+  NAVER
+  KAKAO
 }

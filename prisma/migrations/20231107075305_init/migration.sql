@@ -2,7 +2,7 @@
 CREATE TYPE "AuthType" AS ENUM ('LOCAL', 'OAUTH');
 
 -- CreateEnum
-CREATE TYPE "Provider" AS ENUM ('GOOGLE', 'APPLE', 'EMAIL');
+CREATE TYPE "Provider" AS ENUM ('GOOGLE', 'APPLE', 'EMAIL', 'NAVER', 'KAKAO');
 
 -- CreateTable
 CREATE TABLE "Accounts" (
@@ -50,4 +50,4 @@ CREATE UNIQUE INDEX "UserAccessTokens_userId_platform_key" ON "UserAccessTokens"
 ALTER TABLE "Accounts" ADD CONSTRAINT "Accounts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserAccessTokens" ADD CONSTRAINT "UserAccessTokens_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserAccessTokens" ADD CONSTRAINT "UserAccessTokens_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

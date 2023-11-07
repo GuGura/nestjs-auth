@@ -4,6 +4,7 @@ import { LocalAuthGuard } from './strategy/local.strategy';
 import { Response } from 'express';
 import { Public } from './strategy/public.decorator';
 import { GoogleAuthGuard } from './strategy/google.strategy';
+import { NaverAuthGuard } from './strategy/naver.strategy';
 
 @Public()
 @Controller('auth')
@@ -26,6 +27,24 @@ export class AuthController {
   async googleAuth(): Promise<void> {
     console.log('call google auth page');
     // redirect google login page
+  }
+
+  @Get('naver')
+  @UseGuards(NaverAuthGuard)
+  async naverAuth(): Promise<void> {
+    console.log('call naver auth page');
+    // redirect google login page
+  }
+
+  @Get('naver/callback')
+  @UseGuards(NaverAuthGuard)
+  async naverAuthCallback(@Req() req, @Res() res: Response): Promise<void> {
+    const result = await this.authService.login(
+      req.user,
+      req.headers['user-agent'],
+    );
+    this.authService.setTokenToHttpOnlyCookie(res, result);
+    res.redirect(process.env.WEB_URL);
   }
 
   @Get('google/callback')

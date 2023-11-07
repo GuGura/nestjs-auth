@@ -32,7 +32,6 @@ export class AuthService {
 
   async login(user: any, agent: string) {
     const token = await this.generateToken(user, agent);
-
     return {
       user,
       access: token.access,

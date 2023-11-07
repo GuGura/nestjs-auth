@@ -93,6 +93,7 @@ yarn add @nestjs/config
 ## OAuth2(Google)
 ```bash
 yarn add passport-google-oauth20 @types/passport-google-oauth20
+yarn add passport-naver
 ```
 
 ## Throttler
@@ -111,4 +112,4 @@ yarn add winston winston-daily-rotate-file
 
 # 다이어그램
 ### AppModule
-![img_1.png](img_1.png)
+![img_2.png](img_2.png)

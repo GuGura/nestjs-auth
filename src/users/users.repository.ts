@@ -44,8 +44,9 @@ export class UsersRepository {
         },
       },
     });
+
     return {
-      id: newAccount.id,
+      id: newAccount.userId,
       email,
       name,
     };
