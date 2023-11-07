@@ -68,6 +68,10 @@ yarn prisma init
 
 yarn prisma migrate dev --name init
 yarn add @prisma/client
+
+OR
+prisma db push
+prisma generate
 ```
 
 ## Bcrypt
