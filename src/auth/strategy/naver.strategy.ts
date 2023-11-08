@@ -13,6 +13,7 @@ export class NaverStrategy extends PassportStrategy(Strategy) {
       clientID: process.env.NAVER_CLIENT_ID,
       clientSecret: process.env.NAVER_CLIENT_SECRET,
       callbackURL: process.env.NAVER_CALLBACK,
+      authType: 'reauthenticate',
     });
   }
 
@@ -28,4 +29,10 @@ export class NaverStrategy extends PassportStrategy(Strategy) {
   }
 }
 
-export class NaverAuthGuard extends AuthGuard('naver') {}
+export class NaverAuthGuard extends AuthGuard('naver') {
+  handleRequest(err, user, info, context) {
+    console.log('naver auth guard');
+    console.log(user, info, context);
+    return super.handleRequest(err, user, info, context);
+  }
+}

@@ -34,7 +34,7 @@ export class UsersService {
       provider,
       id,
     );
-
+    console.log('account::', account);
     if (account) {
       return account.user;
     } else {
@@ -44,7 +44,7 @@ export class UsersService {
         name,
         email,
       );
-
+      console.log('newAccount::', newAccount);
       return {
         id: newAccount.id,
         email,

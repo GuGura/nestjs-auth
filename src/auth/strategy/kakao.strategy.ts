@@ -13,16 +13,25 @@ export class KakaoStrategy extends PassportStrategy(Strategy) {
       callbackURL: process.env.KAKAO_CALLBACK,
     });
   }
-
-  async validate(accessToken: string, refreshToken: string, profile: any) {
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: any,
+    done: any,
+  ) {
     console.log(profile);
+    console.log('accessToken::', accessToken);
+    console.log('refreshToken::', refreshToken);
+    console.log('done::', done);
     const { id, username } = profile;
-    return await this.usersService.findOrCreateOAuthAccount(
+    const res = await this.usersService.findOrCreateOAuthAccount(
       Provider.KAKAO,
       String(id),
       username,
       id + '@kakao.com',
     );
+    console.log('res::', res);
+    return res;
   }
 }
 
