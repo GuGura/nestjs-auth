@@ -3,9 +3,11 @@ import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-kakao';
 import { Provider } from '@prisma/client';
 import { UsersService } from '../../users/users.service';
+import { Request } from 'express';
 
 @Injectable()
-export class KakaoStrategy extends PassportStrategy(Strategy) {
+// export class KakaoStrategy extends PassportStrategy(Strategy) {
+export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
   constructor(private usersService: UsersService) {
     super({
       clientID: process.env.KAKAO_CLIENT_ID,
@@ -13,25 +15,19 @@ export class KakaoStrategy extends PassportStrategy(Strategy) {
       callbackURL: process.env.KAKAO_CALLBACK,
     });
   }
-  async validate(
-    accessToken: string,
-    refreshToken: string,
-    profile: any,
-    done: any,
-  ) {
-    console.log(profile);
-    console.log('accessToken::', accessToken);
-    console.log('refreshToken::', refreshToken);
-    console.log('done::', done);
+  authorizationParams(options?: any) {
+    options['prompt'] = 'login';
+    return options;
+  }
+
+  async validate(accessToken: string, refreshToken: string, profile: any) {
     const { id, username } = profile;
-    const res = await this.usersService.findOrCreateOAuthAccount(
+    return await this.usersService.findOrCreateOAuthAccount(
       Provider.KAKAO,
       String(id),
       username,
       id + '@kakao.com',
     );
-    console.log('res::', res);
-    return res;
   }
 }
 

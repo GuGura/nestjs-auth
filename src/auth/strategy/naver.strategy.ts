@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-naver';
-
 import { UsersService } from '../../users/users.service';
 import { Provider } from '@prisma/client';
 
 @Injectable()
-export class NaverStrategy extends PassportStrategy(Strategy) {
+export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
   constructor(private usersService: UsersService) {
-    console.log('123455');
     super({
       clientID: process.env.NAVER_CLIENT_ID,
       clientSecret: process.env.NAVER_CLIENT_SECRET,
