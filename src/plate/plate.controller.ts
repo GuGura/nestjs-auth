@@ -16,6 +16,10 @@ export class PlateController {
   async savePost(@Body('value') value: any) {
     console.log('savePost');
     console.log(value);
-    return await this.plateService.savePost(value);
+    const res = await this.plateService.savePost(value);
+    return {
+      res,
+      status: 200,
+    };
   }
 }
