@@ -45,6 +45,14 @@ model UserAccessTokens {
   @@unique([userId, platform])
 }
 
+model PlatePost {
+  id       String   @id @default(cuid())
+  content  String
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now())
+  isdelete Boolean  @default(false)
+}
+
 enum AuthType {
   LOCAL
   OAUTH
