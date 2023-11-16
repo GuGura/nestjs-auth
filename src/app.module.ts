@@ -9,11 +9,13 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { PrismaModule } from './prisma/prisma.module';
 import { PlateModule } from './plate/plate.module';
+import { ImageUploadModule } from './image-upload/image-upload.module';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
+    ImageUploadModule,
     PrismaModule,
     ConfigModule.forRoot({
       envFilePath: '.env.local',
@@ -29,6 +31,7 @@ import { PlateModule } from './plate/plate.module';
       },
     ]),
     PlateModule,
+    ImageUploadModule,
   ],
   controllers: [AppController],
   providers: [
