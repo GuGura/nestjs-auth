@@ -5,6 +5,18 @@ import { PrismaService } from '../prisma/prisma.service';
 export class PlateRepository {
   constructor(private prisma: PrismaService) {}
 
+  async getPosts() {
+    return this.prisma.platePost.findMany({
+      select: {
+        id: true,
+        content: true,
+      },
+      orderBy: {
+        createAt: 'desc',
+      },
+    });
+  }
+
   async savePost(value: any) {
     const content = JSON.stringify(value);
     await this.prisma.platePost.create({
