@@ -51,13 +51,22 @@ export class FileUploadInterceptor implements NestInterceptor {
   ): Promise<Observable<any>> {
     const ctx = context.switchToHttp();
     const request = ctx.getRequest<Request>();
+    // console.log('request::', request);
     const body = request.body;
-    const value = (body as any).value;
-
+    const value = (body as any).contents;
     const uploadPromises: Promise<void>[] = [];
+    body['firstImg'] = null;
+    body['description'] = '';
 
     await value.map(async (item) => {
-      if (item.type === 'img') {
+      if (item.type !== 'image') {
+        const res = item.children.map((item) => {
+          if (item.text.length !== 0 && body['description'].length < 40) {
+            body['description'] += item.text;
+          }
+        });
+      }
+      if (item.type === 'image') {
         const [metaData, value] = item.url.split(';base64,');
 
         const imageBuffer = Buffer.from(value, 'base64');
@@ -82,6 +91,12 @@ export class FileUploadInterceptor implements NestInterceptor {
               console.error('Error uploading to S3:', err);
             }),
         );
+
+        if (body['firstImg'] === null) {
+          body[
+            'firstImg'
+          ] = `${process.env.CLOUDFLARE_PUBLIC_URL}/test/plate/${fileName}`;
+        }
       }
     });
     await Promise.all(uploadPromises);

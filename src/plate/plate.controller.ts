@@ -21,6 +21,10 @@ export class PlateController {
     };
   }
 
+  @Get('list')
+  async list() {
+    return this.plateService.getList();
+  }
   @Post('post')
   @UseInterceptors(FileUploadInterceptor)
   async savePost(@Body() value: any) {

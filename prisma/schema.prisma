@@ -46,11 +46,15 @@ model UserAccessTokens {
 }
 
 model PlatePost {
-  id       String   @id @default(cuid())
-  content  String
-  createAt DateTime @default(now())
-  updateAt DateTime @default(now())
-  isdelete Boolean  @default(false)
+  id          String   @id @default(cuid())
+  title       String
+  firstImg    String
+  description String
+  category    String
+  content     String
+  createAt    DateTime @default(now())
+  updateAt    DateTime @default(now())
+  isdelete    Boolean  @default(false)
 }
 
 enum AuthType {

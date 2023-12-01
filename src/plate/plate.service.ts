@@ -8,6 +8,10 @@ export class PlateService {
   async getPost() {
     return 'post';
   }
+
+  async getList() {
+    return this.plateRepository.getList();
+  }
   async getPosts(): Promise<any> {
     return this.plateRepository.getPosts();
   }

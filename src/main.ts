@@ -13,7 +13,7 @@ async function bootstrap() {
   app.use(urlencoded({ limit: '50mb', extended: true }));
   app.use(cookieParser());
   app.enableCors({
-    origin: 'http://localhost:3001',
+    origin: 'http://localhost:8080',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });

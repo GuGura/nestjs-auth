@@ -5,6 +5,20 @@ import { PrismaService } from '../prisma/prisma.service';
 export class PlateRepository {
   constructor(private prisma: PrismaService) {}
 
+  async getList() {
+    return this.prisma.platePost.findMany({
+      select: {
+        id: true,
+        title: true,
+        category: true,
+        description: true,
+      },
+      orderBy: {
+        createAt: 'desc',
+      },
+    });
+  }
+
   async getPosts() {
     return this.prisma.platePost.findMany({
       select: {
@@ -18,12 +32,17 @@ export class PlateRepository {
   }
 
   async savePost(value: any) {
-    const content = JSON.stringify(value);
+    const { title, category, contents, firstImg, description } = value;
+    const content = JSON.stringify(contents);
     await this.prisma.platePost.create({
       data: {
         content,
+        title,
+        category,
+        firstImg,
+        description,
       },
     });
-    return content;
+    return true;
   }
 }
