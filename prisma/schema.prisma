@@ -48,8 +48,8 @@ model UserAccessTokens {
 model PlatePost {
   id          String   @id @default(cuid())
   title       String
-  firstImg    String
-  description String
+  firstImg    String?
+  description String?
   category    String
   content     String
   createAt    DateTime @default(now())

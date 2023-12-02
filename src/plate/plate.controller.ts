@@ -1,4 +1,11 @@
-import { Controller, Get, Post, UseInterceptors, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  UseInterceptors,
+  Body,
+  Query,
+} from '@nestjs/common';
 import { PlateService } from './plate.service';
 import { Public } from '../auth/strategy/public.decorator';
 import { FileUploadInterceptor } from '../interceptor/file-upload.interceptor';
@@ -9,9 +16,15 @@ export class PlateController {
   constructor(private plateService: PlateService) {}
 
   @Get('post')
-  async post() {
-    return await this.plateService.getPost();
+  async post(@Query('id') id: string) {
+    console.log('id');
+    const res = await this.plateService.getPost(id);
+    return {
+      res,
+      readonly: true,
+    };
   }
+
   @Get('posts')
   async posts() {
     const res = await this.plateService.getPosts();
@@ -25,6 +38,7 @@ export class PlateController {
   async list() {
     return this.plateService.getList();
   }
+
   @Post('post')
   @UseInterceptors(FileUploadInterceptor)
   async savePost(@Body() value: any) {

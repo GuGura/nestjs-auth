@@ -5,6 +5,20 @@ import { PrismaService } from '../prisma/prisma.service';
 export class PlateRepository {
   constructor(private prisma: PrismaService) {}
 
+  async getPost(id: string) {
+    return this.prisma.platePost.findFirst({
+      select: {
+        id: true,
+        title: true,
+        category: true,
+        content: true,
+      },
+      where: {
+        id,
+      },
+    });
+  }
+
   async getList() {
     return this.prisma.platePost.findMany({
       select: {
@@ -12,6 +26,7 @@ export class PlateRepository {
         title: true,
         category: true,
         description: true,
+        firstImg: true,
       },
       orderBy: {
         createAt: 'desc',

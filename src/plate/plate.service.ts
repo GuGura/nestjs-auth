@@ -5,8 +5,8 @@ import { PlateRepository } from './plate.repository';
 export class PlateService {
   constructor(private plateRepository: PlateRepository) {}
 
-  async getPost() {
-    return 'post';
+  async getPost(id: string) {
+    return this.plateRepository.getPost(id);
   }
 
   async getList() {
