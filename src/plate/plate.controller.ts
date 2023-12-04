@@ -17,7 +17,6 @@ export class PlateController {
 
   @Get('post')
   async post(@Query('id') id: string) {
-    console.log('id');
     const res = await this.plateService.getPost(id);
     return {
       res,
@@ -42,6 +41,7 @@ export class PlateController {
   @Post('post')
   @UseInterceptors(FileUploadInterceptor)
   async savePost(@Body() value: any) {
+    if (value.title.trim().length === 0) return null;
     return await this.plateService.savePost(value);
   }
 }
