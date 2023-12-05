@@ -9,11 +9,8 @@ export class PlateService {
     return this.plateRepository.getPost(id);
   }
 
-  async getList() {
-    return this.plateRepository.getList();
-  }
-  async getPosts(): Promise<any> {
-    return this.plateRepository.getPosts();
+  async getList(filter, page, pageSize) {
+    return this.plateRepository.getList(filter, page, pageSize);
   }
   async savePost(value: any) {
     return await this.plateRepository.savePost(value);

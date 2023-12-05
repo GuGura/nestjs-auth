@@ -19,8 +19,22 @@ export class PlateRepository {
     });
   }
 
-  async getList() {
-    return this.prisma.platePost.findMany({
+  async getList(filter, page, pageSize) {
+    const skip = (page - 1) * pageSize;
+    const whereConditions = {};
+    const orderByConditions = {};
+    if (!!filter) {
+      if (!!filter.category) {
+        whereConditions['category'] = filter.category;
+      }
+      if (!!filter.sortBy) {
+        orderByConditions['createAt'] = filter.sortBy;
+      }
+    }
+
+    const posts = await this.prisma.platePost.findMany({
+      skip,
+      take: Number(pageSize),
       select: {
         id: true,
         title: true,
@@ -28,22 +42,15 @@ export class PlateRepository {
         description: true,
         firstImg: true,
       },
-      orderBy: {
-        createAt: 'desc',
-      },
+      orderBy: orderByConditions,
+      where: whereConditions,
     });
-  }
+    const count = await this.prisma.platePost.count();
 
-  async getPosts() {
-    return this.prisma.platePost.findMany({
-      select: {
-        id: true,
-        content: true,
-      },
-      orderBy: {
-        createAt: 'desc',
-      },
-    });
+    return {
+      count,
+      posts,
+    };
   }
 
   async savePost(value: any) {
