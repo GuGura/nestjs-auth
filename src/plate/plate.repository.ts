@@ -6,7 +6,7 @@ export class PlateRepository {
   constructor(private prisma: PrismaService) {}
 
   async getPost(id: string) {
-    return this.prisma.platePost.findFirst({
+    return this.prisma.posts.findFirst({
       select: {
         id: true,
         title: true,
@@ -19,20 +19,32 @@ export class PlateRepository {
     });
   }
 
-  async getList(filter, page, pageSize) {
-    const skip = (page - 1) * pageSize;
-    const whereConditions = {};
-    const orderByConditions = {};
-    if (!!filter) {
-      if (!!filter.category) {
-        whereConditions['category'] = filter.category;
-      }
-      if (!!filter.sortBy) {
-        orderByConditions['createAt'] = filter.sortBy;
-      }
-    }
+  async savePost(
+    content: any,
+    title: string,
+    category: string,
+    firstImg: string,
+    description: string,
+  ) {
+    await this.prisma.posts.create({
+      data: {
+        content,
+        title,
+        category,
+        firstImg,
+        description,
+      },
+    });
+    return true;
+  }
 
-    const posts = await this.prisma.platePost.findMany({
+  async getListTypePagination(
+    skip: number,
+    pageSize: number,
+    whereConditions: { category?: string },
+    orderByConditions: { createAt?: 'asc' | 'desc' },
+  ) {
+    return this.prisma.posts.findMany({
       skip,
       take: Number(pageSize),
       select: {
@@ -45,26 +57,11 @@ export class PlateRepository {
       orderBy: orderByConditions,
       where: whereConditions,
     });
-    const count = await this.prisma.platePost.count();
-
-    return {
-      count,
-      posts,
-    };
   }
 
-  async savePost(value: any) {
-    const { title, category, contents, firstImg, description } = value;
-    const content = JSON.stringify(contents);
-    await this.prisma.platePost.create({
-      data: {
-        content,
-        title,
-        category,
-        firstImg,
-        description,
-      },
+  async getCountByCategory(whereConditions: { category?: string }) {
+    return this.prisma.posts.count({
+      where: whereConditions,
     });
-    return true;
   }
 }

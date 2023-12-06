@@ -45,7 +45,7 @@ model UserAccessTokens {
   @@unique([userId, platform])
 }
 
-model PlatePost {
+model Posts {
   id          String   @id @default(cuid())
   title       String
   firstImg    String?

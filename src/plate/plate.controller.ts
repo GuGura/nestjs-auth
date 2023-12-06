@@ -29,7 +29,7 @@ export class PlateController {
   @Get('list')
   async list(@Query() dto) {
     const { filter, page, pageSize } = dto;
-    return this.plateService.getList(filter, page, pageSize);
+    return this.plateService.getList(page, pageSize, filter);
   }
 
   @Post('post')
