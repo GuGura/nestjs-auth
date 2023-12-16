@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { PrismaModule } from './prisma/prisma.module';
 import { PlateModule } from './plate/plate.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PlateModule } from './plate/plate.module';
       },
     ]),
     PlateModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [

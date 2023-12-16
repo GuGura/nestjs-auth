@@ -11,11 +11,15 @@ import {
 import { PlateService } from './plate.service';
 import { Public } from '../auth/strategy/public.decorator';
 import { FileUploadInterceptor } from '../interceptor/file-upload.interceptor';
+import { MailService } from '../mail/mail.service';
 
 @Controller('plate')
 @Public()
 export class PlateController {
-  constructor(private plateService: PlateService) {}
+  constructor(
+    private plateService: PlateService,
+    private mailService: MailService,
+  ) {}
 
   @Get('post')
   async getPostDetail(@Query('id') id: string) {
@@ -38,5 +42,10 @@ export class PlateController {
     if (value.title.trim().length === 0)
       throw new HttpException('Title is Empty', HttpStatus.BAD_REQUEST);
     return await this.plateService.savePost(value);
+  }
+
+  @Get()
+  testMail(): void {
+    return this.mailService.sendMail();
   }
 }
