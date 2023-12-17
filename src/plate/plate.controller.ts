@@ -52,4 +52,9 @@ export class PlateController {
   testOAuthMail() {
     return this.mailService.sendOAuth2('woduszmfltma@naver.com');
   }
+
+  @Get('oauth2')
+  testOAuthMail2() {
+    return this.mailService.sendMailV2();
+  }
 }
